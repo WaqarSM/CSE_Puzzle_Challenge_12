@@ -1,7 +1,9 @@
-
+################################################################################################
 from PIL import Image, ImageDraw
 import time
 import os
+import hashlib
+import imagehash
 
 
 def compare_images(input_image, output_image):
@@ -24,8 +26,8 @@ def compare_images(input_image, output_image):
 print('*** Program Started ***')
 
 # image_font_path = 'imagepath_input = '/home/conquistador/code/github/python-01-utilities/image/fonts/'
-image_path_input = '/Users/mwaqar/shenanigans/'
-image_path_output = '/Users/mwaqar/shenanigans/out/'
+image_path_input = '/Users/mwaqar/shenanigans/CSE_Puzzle_Challenge_12/'
+image_path_output = '/Users/mwaqar/shenanigans/CSE_Puzzle_Challenge_12/out/'
 image_name_input = 'flags_en.png'
 
 ######################################################
@@ -93,30 +95,45 @@ h=(im_height/37)
 
 #############3 Many counter
 Uni=[]
+Uni_hash=[]
 no=0
+no1=0
 Uni.append("out/0_0.png")
+
+image_file = Image.open("out/0_0.png")
+# print (str(imagehash.dhash(image_file)))
+Uni_hash.append(str(imagehash.dhash(image_file)))
+
 for u in Uni:
     for i in range(37):
         print ("i: ",i)
         for j in range(37):
-            print ("j: ",j)
+            # print ("j: ",j)
             original = Image.open(u)
             pd="out/"+str(j)+"_"+str(i)+".png"
             possible_duplicate = Image.open(pd)
-            if (compare_images(original, possible_duplicate)==False):
-                # if pd not in Uni:
-                Uni.append(pd)
-                # print (Uni)
-                print ("=============\nappended")
-                no=no+1
-                print ("no: ",no)
-
+            if (compare_images(original, possible_duplicate)==True):
+                pd_hash = (str(imagehash.dhash(possible_duplicate)))
+                if pd_hash not in Uni_hash:
+                    Uni.append(possible_duplicate)
+                    print (Uni)
+                    print ("============= appended")
+                    no=no+1
+                    print ("no: ",no)
             else:
                 print ("++++++")
+                no1=no1+1
+            print ("no: ",no)
+            print ("no1: ",no1)
+            del(original)
             del(possible_duplicate)
 
     print("TOTAL UNIQUE BOIS: ", len(Uni))
 print(Uni)
-
+### HASHING
+# # Loading an image file into memory and calculating it's hash value.
+# image_file = open('data/cat_grumpy_orig.png').read()
+# hashlib.md5(image_file).hexdigest()
+#     # '3e1f6e9f2689d59b9ed28bcdab73455f'
 
 print('*** Program Ended ***')
