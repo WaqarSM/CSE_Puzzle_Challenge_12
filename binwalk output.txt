@@ -1,0 +1,6 @@
+binwalk ../../CSE_Puzzle_Challenge_12/flags_en.png
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             PNG image, 3700 x 3700, 8-bit/color RGBA, non-interlaced
+41            0x29            Zlib compressed data, default compression
